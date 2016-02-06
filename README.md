@@ -13,3 +13,19 @@
 - Execute `consul agent -server -bootstrap -data-dir /tmp/consul -bind=192.168.50.2` in order to bootstrap firstnode
 - Login in consulserver3 and consulserver4 in order to boot agents `consul agent -server -data-dir /tmp/consul -bind=192.168.0.3` in consulserver3 and `consul agent -server -data-dir /tmp/consul -bind=192.168.0.4` in consulserver4
 - Move again to consulserver2 and add consulserver3 and consulserver4 to the cluster with `consul join 192.168.0.3 192.168.0.4`
+- Load UI `consul agent -data-dir /tmp/consul -client 192.168.50.5 -ui-dir /tmp/webiu -join 192.168.50.2`
+- Check UI from host browser `http://localhost:8500/ui`
+- Check example
+`{
+    "service": {
+        "name": "web server",
+        "port": 80,
+        "tags": ["nginx", "demonstration"],
+        "check": {
+            "script": "curl localhost:80 > /dev/null 2>&1",
+            "interval": "10s"
+        }
+    }
+}`
+- Reload agent with this parameter `-config-dir /home/your_user/services` to make efective the new service monitoring
+
